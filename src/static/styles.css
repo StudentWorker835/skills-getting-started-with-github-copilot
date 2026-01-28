@@ -165,3 +165,28 @@ footer {
   padding: 20px;
   color: #666;
 }
+
+  /* Hide bullet points for participants list */
+  #participants-list {
+    list-style-type: none;
+    padding-left: 0;
+  }
+
+  /* Style for participant item */
+  .participant-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4px 0;
+  }
+
+  /* Style for delete icon */
+  .delete-icon {
+    margin-left: 12px;
+    color: #c00;
+    font-size: 1.1em;
+    transition: color 0.2s;
+  }
+  .delete-icon:hover {
+    color: #f33;
+  }

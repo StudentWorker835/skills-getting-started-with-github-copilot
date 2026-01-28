@@ -70,6 +70,8 @@ document.addEventListener("DOMContentLoaded", () => {
         messageDiv.textContent = result.message;
         messageDiv.className = "success";
         signupForm.reset();
+        // Refresh activities list to show new participant
+        await fetchActivities();
       } else {
         messageDiv.textContent = result.detail || "An error occurred";
         messageDiv.className = "error";
@@ -91,4 +93,38 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Initialize app
   fetchActivities();
+    const participantsList = document.getElementById('participants-list');
+    participantsList.innerHTML = '';
+    participants.forEach((participant) => {
+        const li = document.createElement('li');
+        li.classList.add('participant-item');
+        // Create span for name
+        const nameSpan = document.createElement('span');
+        nameSpan.textContent = participant;
+        li.appendChild(nameSpan);
+
+        // Create delete icon
+        const deleteBtn = document.createElement('span');
+        deleteBtn.className = 'delete-icon';
+        deleteBtn.title = 'Unregister participant';
+        deleteBtn.innerHTML = '&#128465;'; // Trash can icon
+        deleteBtn.style.cursor = 'pointer';
+        deleteBtn.onclick = function() {
+            unregisterParticipant(participant);
+        };
+        li.appendChild(deleteBtn);
+
+        participantsList.appendChild(li);
+    });
+
+    // Hide bullet points via JS fallback (in case CSS fails)
+    participantsList.style.listStyleType = 'none';
+  });
+
+  // Unregister participant function
+  function unregisterParticipant(name) {
+    // Remove participant from the list and re-render
+    participants = participants.filter(p => p !== name);
+    renderParticipants();
+  }
 });
